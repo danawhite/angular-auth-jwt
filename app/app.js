@@ -7,7 +7,8 @@ app.Directives = angular.module('bi.app.directives', []);
 angular.module('angularJwt', [
     'bi.app.controllers',
     'bi.app.services',
-    'bi.app.directives'
+    'bi.app.directives',
+    'ngRoute'
 ])
 .config([
         '$routeProvider',
