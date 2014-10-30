@@ -3,11 +3,11 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>AngularJS Authentication</title>
-
+    <!-- add favicon -->
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="app.css">
     <link rel="stylesheet" href="view/main/main.css">
-    <link rel="stylesheet" href="components/userLogin/userLogin.css">
+    <link rel="stylesheet" href="components/user-login/user-login.css">
 </head>
 <body ng-app="angularJwt">
 
@@ -19,16 +19,17 @@
     <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="lib/angular-route/angular-route.min.js"></script>
     <script src="app.js"></script>
-    <script src="view/main/main.js"></script>
+    <!--<script src="view/main/main.js"></script>-->
 
     <!-- Controllers -->
-    <script src="components/userLogin/userLogin-conrtroller.js"></script>
+    <script src="components/user-login/user-login-controller.js"></script>
 
     <!-- Directives -->
-    <script src="components/userLogin/userLogin-directive.js"></script>
+    <script src="components/user-login/user-login-directive.js"></script>
 
     <!-- Services -->
     <script src="view/main/services/auth/auth-service.js"></script>
     <script src="view/main/services/user/user-service.js"></script>
+    <script src="components/user-login/services/auth-token-factory.js"></script>
 </body>
 </html>

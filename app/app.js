@@ -18,13 +18,14 @@ angular.module('angularJwt')
         '$q',
         '$window',
         'AUTH_EVENTS',
-        function($location, $rootScope, $q, $window, AUTH_EVENTS){
+        'components.user-login.services.AuthTokenFactory',
+        function($location, $rootScope, $q, $window, AUTH_EVENTS, AuthTokenFactory){
             return{
                 request: function(config){
                     config.headers = config.headers || {};
                     // FIXME: May cause an error
-                    if($window.localStorage.token){
-                        config.headers.Authorization = 'Bearer ' + $window.localStorage.token;
+                    if(AuthTokenFactory.getToken !== 'undefined'){
+                        //config.headers.Authorization = 'Bearer ' + $window.localStorage.token;
                     }
                     return config;
                 },
@@ -73,6 +74,10 @@ angular.module('angularJwt')
         notAuthenticated: 'auth-not-authenticated',
         notAuthorized: 'auth-not-authorized'
     })
+    .constant('USER_ROLES', {
+
+    })
+    .constant('URL_PREFIX', 'http://localhost:8080')
     .config([
         '$httpProvider',
         function($httpProvider){
@@ -98,11 +103,11 @@ angular.module('angularJwt')
                 .when('/', {
                     templateUrl: 'view/main/main.html'
                 }, true)
-                .when('/dashboard', {
-                    templateUrl: 'view/dashboard/dashboard.html',
-                    access: {
-                        loginRequired: true
-                    }
+                .when('/success', {
+                    templateUrl: 'view/success/success.html',
+                    //access: {
+                    //    loginRequired: true
+                    //}
                 })
                 .otherwise('/');
         }
@@ -114,7 +119,7 @@ angular.module('angularJwt')
         '$log',
         '$filter',
         '$location',
-        'view.login.services.authservice.AuthService',
+        'view.main.services.authservice.AuthService',
         'view.userlogin.services.user.UserService',
         'AUTH_EVENTS',
         function($window, $rootScope, $log, $filter, $location, AuthService, UserService, AUTH_EVENTS){
@@ -126,14 +131,11 @@ angular.module('angularJwt')
                     $window.localStorage.removeItem('roles');
                     $window.localStorage.removeItem('isLoggedIn');
                 }
-                if(next.access.loginRequired && !$window.localStorage.token) {
-//                          console.log(next.loadedTemplateUrl);
-//                        console.log('token? ' + $window.localStorage.token);
-//                        console.log('authenticated? ' + $window.localStorage.token);
-                    $location.path('/');
-                }else{
-                    $log.info('login is not required');
-//                        console.log('authenticated? ' + $window.localStorage.token);
-                }
+//                if(next.access.loginRequired && !$window.localStorage.token) {
+//                    $location.path('/');
+//                }else{
+//                    $log.info('login is not required');
+////                        console.log('authenticated? ' + $window.localStorage.token);
+//                }
             });
         }]);

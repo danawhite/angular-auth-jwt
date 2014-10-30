@@ -1,4 +1,4 @@
-app.Controllers.controller('components.userLogin.UserLoginController', [
+app.Controllers.controller('components.user-login.UserLoginController', [
     '$rootScope',
     '$window',
     '$log',

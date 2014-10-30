@@ -1,4 +1,4 @@
-app.Services.factory('view.login.services.authservice.AuthService',
+app.Services.factory('view.main.services.authservice.AuthService',
     [
         '$window',
         '$http',
@@ -9,7 +9,7 @@ app.Services.factory('view.login.services.authservice.AuthService',
             var AuthService = {};
 
             AuthService.authenticate = function(credentials){
-                return $http.post(SOME_URL + credentials)
+                return $http.post(SOME_URL + '/auth' + credentials)
                     .then(function(response){
                         UserService.createUser(response.data.token);
                     })

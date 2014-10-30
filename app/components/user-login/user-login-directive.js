@@ -1,7 +1,8 @@
 app.Directives.directive('userLogin', function(){
     return{
         restrict: 'E',
-        templateUrl: 'components/userLogin/userLogin.html',
-        controller: 'components/userLogin/user'
+        templateUrl: 'components/user-login/user-login.html',
+        controller: 'components.user-login.UserLoginController',
+        controllerAs: 'userLoginCtrl'
     }
 });

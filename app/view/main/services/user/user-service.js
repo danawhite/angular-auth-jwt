@@ -1,9 +1,10 @@
-app.Services.service('view.userlogin.services.user.UserService',
+app.Services.factory('view.userlogin.services.user.UserService',
     [
         '$window',
         '$rootScope',
         'AUTH_EVENTS',
-        function($window, $rootScope, AUTH_EVENTS){
+        'components.user-login.services.AuthTokenFactory',
+        function($window, $rootScope, AUTH_EVENTS, AuthTokenFactory){
 
             var UserService = {};
 
