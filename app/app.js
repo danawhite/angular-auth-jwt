@@ -34,21 +34,9 @@ angular.module('angularJwt')
                     return response;
                 },
                 requestError: function(rejection){
-                    // an error happened on the request
-                    // if we can recover from the error
-                    // we can return a new request or promise
-                    // Otherwise, we can reject the next
-                    // by returning a rejection
-                    //return $q.reject(rejection)
                     return rejection;
                 },
                 responseError: function(response){
-                    // an error happened on the request
-                    // if we recover from the error,
-                    // we can return a new response or promise
-                    // Otherwise, we can reject the next by
-                    // returning a rejection
-                    // return $q.reject(rejection)
                     if(response.status == 401){
                         console.dir(response);
 //                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, response);
@@ -73,9 +61,6 @@ angular.module('angularJwt')
         sessionTimeout: 'auth-session-timeout',
         notAuthenticated: 'auth-not-authenticated',
         notAuthorized: 'auth-not-authorized'
-    })
-    .constant('USER_ROLES', {
-
     })
     .constant('URL_PREFIX', 'http://localhost:8080')
     .config([
@@ -102,12 +87,9 @@ angular.module('angularJwt')
             $routeProvider
                 .when('/', {
                     templateUrl: 'view/main/main.html'
-                }, true)
+                })
                 .when('/success', {
                     templateUrl: 'view/success/success.html',
-                    //access: {
-                    //    loginRequired: true
-                    //}
                 })
                 .otherwise('/');
         }
@@ -115,14 +97,7 @@ angular.module('angularJwt')
     .run(
     [
         '$window',
-        '$rootScope',
-        '$log',
-        '$filter',
-        '$location',
-        'view.main.services.authservice.AuthService',
-        'view.userlogin.services.user.UserService',
-        'AUTH_EVENTS',
-        function($window, $rootScope, $log, $filter, $location, AuthService, UserService, AUTH_EVENTS){
+        function($window){
             $rootScope.$on('$routeChangeStart', function(evt, next, current){
                 if($window.localStorage['expiry'] === $filter('date')(new Date())){
                     // TODO move items into User object
@@ -131,11 +106,5 @@ angular.module('angularJwt')
                     $window.localStorage.removeItem('roles');
                     $window.localStorage.removeItem('isLoggedIn');
                 }
-//                if(next.access.loginRequired && !$window.localStorage.token) {
-//                    $location.path('/');
-//                }else{
-//                    $log.info('login is not required');
-////                        console.log('authenticated? ' + $window.localStorage.token);
-//                }
             });
         }]);

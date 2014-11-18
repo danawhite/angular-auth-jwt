@@ -1,3 +1,9 @@
-/**
- * Created by idxd on 9/27/14.
- */
+describe("controller:UserLoginController", function(){
+    beforeEach(function(){
+        module('angularJwt');
+
+        //inject(function($injector){
+        //
+        //})
+    })
+});
