@@ -1,3 +1,4 @@
-/**
- * Created by idxd on 9/27/14.
- */
+describe('service:UserService', function(){
+    var $rootScope,
+        AUTH_EVENTS
+});

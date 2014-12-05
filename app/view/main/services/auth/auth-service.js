@@ -1,11 +1,8 @@
 app.Services.factory('view.main.services.authservice.AuthService',
     [
-        '$window',
         '$http',
-        '$location',
         'view.userlogin.services.user.UserService',
-        'AUTH_EVENTS',
-        function($window, $http, $location, UserService, AUTH_EVENTS){
+        function($http, UserService){
             var AuthService = {};
 
             AuthService.authenticate = function(credentials){
@@ -14,14 +11,13 @@ app.Services.factory('view.main.services.authservice.AuthService',
                         UserService.createUser(response.data.token);
                     })
             };
-
-            AuthService.isAuthenticated = function(){
-                return Session.userId !== null;
-            };
+            //AuthService.isAuthenticated = function(){
+            //    return UserSer.userId !== null;
+            //};
 
             AuthService.logout = function(){
-                UserService.destroy();
-                $location.path('/');
+                UserService.destroyUser();
+                //$location.path('/');
 
             };
 

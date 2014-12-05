@@ -3,36 +3,80 @@ app.Services.factory('view.userlogin.services.user.UserService',
         '$window',
         '$rootScope',
         'AUTH_EVENTS',
-        'components.user-login.services.AuthTokenFactory',
-        function($window, $rootScope, AUTH_EVENTS, AuthTokenFactory){
+        function($window, $rootScope, AUTH_EVENTS){
 
             var UserService = {};
 
+            var store = $window.localStorage;
+
             UserService.createUser = function(token){
                 UserService.claims = angular.fromJson($window.atob(token.split('.')[1]));
-                UserService.user = User.claims['userId'];
+                UserService.user = UserService.claims['userId'];
                 UserService.token = token || null;
                 UserService.roles = UserService.claims['roles'];
                 UserService.expiry = UserService.claims['expiry'];
-                $window.localStorage.setItem('token', token);
-                $window.localStorage.setItem('userID', UserService.user);
-                $window.localStorage.setItem('roles', UserService.roles);
-                $window.localStorage.setItem('expiry', UserService.expiry);
+                store.setItem('token', token);
+                store.setItem('userID', UserService.user);
+                store.setItem('roles', UserService.roles);
+                store.setItem('expiry', UserService.expiry);
             };
 
-            UserService.destroy = function(){
+            UserService.userIsAuthenticated = function(){
+                return !!store.getItem('token');
+            };
+
+            UserService.getCurrentUser = function(){
+                return store.getItem('username');
+            };
+
+            UserService.getItem = function(key){
+                return store.getItem(key);
+            };
+
+            UserService.setItem = function(key, value){
+                if(!key){
+                    return;
+                }
+                store.setItem(key, value);
+            };
+
+            UserService.destroyUser = function(){
                 UserService.token = null;
                 UserService.userId = null;
                 UserService.role = null;
                 UserService.expiry = null;
-                $window.localStorage.removeItem('token');
-                $window.localStorage.removeItem('userId');
-                $window.localStorage.removeItem('roles');
-                $window.localStorage.removeItem('expiry');
+                store.removeItem('token');
+                store.removeItem('userId');
+                store.removeItem('roles');
+                store.removeItem('expiry');
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess, {
                     username: ''
                 });
             };
+
+            function createUser(){
+
+            }
+
+            function userIsAuthenticated(){
+
+            }
+
+            function getCurrentUser(){
+
+            }
+
+            function getItem(){
+
+            }
+
+            function setItem(){
+
+            }
+
+            function destroyUser(){
+
+            }
 
             return UserService;
         }]);

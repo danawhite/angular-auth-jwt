@@ -38,12 +38,13 @@ angular.module('angularJwt')
                 },
                 responseError: function(response){
                     if(response.status == 401){
-                        console.dir(response);
-//                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, response);
-//                        $window.alert('you are not authenticated');
-//                        return;
-//                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, {});
-//                        return response || $q.when(response);
+
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, response);
+                        $window.alert('you are not authenticated');
+                        return;
+
+                        $rootScope.$broadcast(AUTH_EVENTS.notAuthenticated, {});
+                        return response || $q.when(response);
                         return $q.reject(response);
                     }
                     if(response.status == 403){
@@ -89,15 +90,17 @@ angular.module('angularJwt')
                     templateUrl: 'view/main/main.html'
                 })
                 .when('/success', {
-                    templateUrl: 'view/success/success.html',
+                    templateUrl: 'view/success/success.html'
                 })
-                .otherwise('/');
+                .otherwise({templateUrl: 'view/main/main.html'});
         }
     ])
     .run(
     [
         '$window',
-        function($window){
+        '$rootScope',
+        '$filter',
+        function($window, $rootScope, $filter){
             $rootScope.$on('$routeChangeStart', function(evt, next, current){
                 if($window.localStorage['expiry'] === $filter('date')(new Date())){
                     // TODO move items into User object
