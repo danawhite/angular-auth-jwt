@@ -1,28 +1,31 @@
-app.Controllers.controller('components.user-login.UserLoginController', [
-    '$rootScope',
-    'AUTH_EVENTS',
-    'view.main.services.authservice.AuthService',
-    function($rootScope, $log, AUTH_EVENTS, AuthService){
+app.Controllers.controller('components.user-login.UserLoginController', UserLoginController);
 
-        var vm = this;
+UserLoginController.$inject = [
+'$rootScope',
+'AUTH_EVENTS',
+'view.main.services.authservice.AuthService'
+];
 
-        vm.user = {
-            username: '',
-            password: ''
-        };
+function UserLoginController($rootScope, AUTH_EVENTS, AuthService){
 
-        vm.currentUser = null;
-        vm.isAuthorized = AuthService.isAuthorized;
-        vm.isAuthenticated = AuthService.isAuthenticated;
+    var login = this;
 
-        vm.authenticate = function(credentials) {
-            AuthService.authenticate(credentials).then(function () {
-                $rootScope.$emit(AUTH_EVENTS.loginSuccess, {
-                    username: credentials.username
-                }), function () {
-                    $rootScope.$emit(AUTH_EVENTS.loginFailed);
-                };
-            });
-        };
-    }
-]);
+    login.user = {
+        username: '',
+        password: ''
+    };
+
+    login.currentUser = null;
+    login.isAuthorized = AuthService.isAuthorized;
+    login.isAuthenticated = AuthService.isAuthenticated;
+
+    login.authenticate = function(credentials) {
+        AuthService.authenticate(credentials).then(function(data) {
+            $rootScope.$emit(AUTH_EVENTS.loginSuccess, {
+                username: credentials.username
+            }), function () {
+                $rootScope.$emit(AUTH_EVENTS.loginFailed);
+            };
+        });
+    };
+}

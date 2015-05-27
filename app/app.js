@@ -1,8 +1,8 @@
-var app = app || {};
-
-app.Controllers = angular.module('bi.app.controllers', []);
-app.Services = angular.module('bi.app.services', []);
-app.Directives = angular.module('bi.app.directives', []);
+//var app = app || {};
+//
+//app.Controllers = angular.module('bi.app.controllers', []);
+//app.Services = angular.module('bi.app.services', []);
+//app.Directives = angular.module('bi.app.directives', []);
 
 angular.module('angularJwt', [
     'bi.app.controllers',
@@ -10,6 +10,18 @@ angular.module('angularJwt', [
     'bi.app.directives',
     'ngRoute'
 ]);
+
+var angular = require('angular');
+var ngModule = angular.module('angular-auth-jwt', [
+    require('webpack'),
+    require('raw-loader'),
+    require('style-loader'),
+    require('css-loader'),
+    require('bootstrap')
+]);
+
+require('./states')(ngModule);
+require('./components')(ngModule);
 
 angular.module('angularJwt')
     .factory('AuthInterceptor', [
